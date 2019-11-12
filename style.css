@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: #f1f2f6;
+}
+
+.question-wrapper {
+    background: #fff;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.question {
+    margin-bottom: 5px;
+}
+
+.q-indent {
+    padding: 10px 0 10px 15px;
+}

@@ -59,6 +59,7 @@ function loadQuestions() {
             document.querySelector('.exam-wrapper').innerHTML = output;
             addEventsOnAnswer();
             recoverAnswers();
+            checkAnswer();
         });
 }
 
@@ -90,3 +91,62 @@ function recoverAnswers() {
 document.addEventListener("DOMContentLoaded", () => {
     loadQuestions();
 });
+
+function getAnswers () {
+    let answers = [{"id":"test","answers":"test"}];
+    // fetch('answers.json')
+    // .then((res) => res.json())
+    // .then((data) => {
+    //     data.forEach((item) => {
+    //         answers.push({
+    //             "id": item.id,
+    //             "answer": item.answer
+    //         });
+    //         console.log(item.id);
+    //     });
+    // });
+
+    const getAnswers = fetch('answers.json').then(response => response.json());
+    console.log(JSON.stringify(getAnswers));
+
+    // return answers;
+}
+
+function checkAnswer() {
+    let teacher = [
+        {
+            "id":"q0001",
+            "answer":"Answer one for testing"
+        },
+        {
+            "id":"q0002",
+            "answer":"Final Option for test"
+        },
+        {
+            "id":"q0003",
+            "answer":"My option three"
+        },
+        {
+            "id":"q0004",
+            "answer":"Testing, Answer Two"
+        }
+    ];
+    let student = JSON.parse(getBrowserCookie("cookieAnswers"));
+    let correctItems = 0;
+
+    student.forEach((item) => {
+        teacher.forEach((answer) => {
+            if(item.id == answer.id){
+                if(item.answer == answer.answer){
+                    console.log(item.id + ' correct');
+                    correctItems++;
+                } else {
+                    console.log(item.id + ' wrong');
+                }
+            }
+        });
+    });
+
+    console.log('Your score: '+correctItems);
+
+}

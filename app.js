@@ -15,12 +15,10 @@ function compileAnswers(event) {
 
     allOptions.forEach(link => {
         if (link.checked) {
-            answers.push(
-                {
+            answers.push({
                     "id": link.getAttribute("name"),
                     "answer": link.getAttribute("value")
-                }
-            );
+            });
         }
     });
 
@@ -57,24 +55,10 @@ function loadQuestions() {
             });
 
             document.querySelector('.exam-wrapper').innerHTML = output;
+            
             addEventsOnAnswer();
             recoverAnswers();
-            checkAnswer();
         });
-}
-
-// Shuffle Display of Questions
-function shuffle(arr) {
-    var i,
-        j,
-        temp;
-    for (i = arr.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-    }
-    return arr;
 }
 
 function recoverAnswers() {
@@ -88,10 +72,6 @@ function recoverAnswers() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    loadQuestions();
-});
-
 function getAnswers() {
     return fetch('answers.json')
         .then((res) => res.json())
@@ -100,11 +80,11 @@ function getAnswers() {
 
 function checkAnswer() {
     let student = JSON.parse(getBrowserCookie("cookieAnswers"));
-    getAnswers().then((teacher) => {
+    getAnswers().then((answers) => {
         let correctItems = 0;
 
         student.forEach((item) => {
-            teacher.forEach((answer) => {
+            answers.forEach((answer) => {
                 if (item.id == answer.id) {
                     if (item.answer == answer.answer) {
                         console.log(item.id + ' correct');
@@ -117,9 +97,16 @@ function checkAnswer() {
         });
 
         console.log('Your score: ' + correctItems);
+        let score = document.querySelector('#score');
+        score.innerHTML = correctItems;
+        score.style.display = 'block';
     });
-
-
-
-
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadQuestions();
+
+    document.getElementById("check").addEventListener('click', function() {
+        checkAnswer();
+    });
+});

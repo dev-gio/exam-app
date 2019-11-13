@@ -21,3 +21,15 @@ body {
 .q-indent {
     padding: 10px 0 10px 15px;
 }
+
+#score:before {
+    content: "Your score is ";
+}
+ 
+#score:after {
+    content: ".";
+} 
+
+#score {
+    display: none;
+}
